@@ -1,0 +1,129 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".UploadNotice">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Image Selector -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/addImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_purple"
+                    android:src="@drawable/ic_image"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Image (Optional)"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColor"
+                    android:paddingTop="8dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Notice Title Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noticeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notice Title"
+                android:textColorHint="@color/lightGray"
+                android:inputType="textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Notice Body (Details of the Notice) -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noticeBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notice Details"
+                android:textColorHint="@color/lightGray"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:maxLines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Visibility Spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Select Who Will See:"
+            android:textStyle="bold"
+            android:textColor="@color/textColor" />
+
+        <Spinner
+            android:id="@+id/visibilitySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/visibility_options" />
+
+        <!-- Image Preview (Smaller) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="12dp">
+
+            <ImageView
+                android:id="@+id/noticeImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Preview of the selected image" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Upload Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/uploadNoticeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Upload Notice"
+            android:textAllCaps="false"
+            app:icon="@drawable/ic_upload"
+            app:iconPadding="8dp"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+</ScrollView>

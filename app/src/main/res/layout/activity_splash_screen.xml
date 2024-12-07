@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SplashScreen">
+
+    <!-- Fullscreen Animation -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splashAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/splash_screen"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:scaleType="centerCrop" />
+
+    <!-- Overlay Content -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <!-- App Title -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_centerHorizontal="true"
+            android:text="Campus Connect"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/textColor" />
+
+        <!-- Admin/CR Button -->
+        <Button
+            android:id="@+id/adminButton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_below="@id/appTitle"
+            android:layout_centerHorizontal="true"
+            android:text="Admin/CR"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_admin" />
+
+        <!-- Student Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/studentButton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/adminButton"
+            android:layout_centerHorizontal="true"
+            android:text="Student"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_user" />
+    </RelativeLayout>
+
+</FrameLayout>

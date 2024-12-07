@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Admin App</string>
+    <string-array name="visibility_options">
+        <item>Only for Batch</item>
+        <item>For Department</item>
+        <item>For All University Students</item>
+    </string-array>
+
+</resources>
