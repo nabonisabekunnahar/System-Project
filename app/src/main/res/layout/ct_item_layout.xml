@@ -1,0 +1,94 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    android:backgroundTint="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- CT Number and Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ctNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CT #1"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ctDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 Nov 2024"
+                android:textSize="16sp"
+                android:textColor="#757575"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Course -->
+        <TextView
+            android:id="@+id/ctCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course: Operating Systems"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:layout_marginTop="8dp" />
+
+        <!-- Teacher -->
+        <TextView
+            android:id="@+id/teacherName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teacher: Rakib Sir"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:layout_marginTop="4dp" />
+
+        <!-- Syllabus -->
+        <TextView
+            android:id="@+id/ctSyllabus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Syllabus: Deadlock (Chapter 7)"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:layout_marginTop="4dp" />
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/ctStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status: Done"
+            android:textSize="14sp"
+            android:textColor="#4CAF50"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/updateInfoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Update Info"
+            android:textSize="14sp"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="end"
+            android:backgroundTint="#658066"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

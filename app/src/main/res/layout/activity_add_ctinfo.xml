@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add CT Info"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- CT Number -->
+        <EditText
+            android:id="@+id/input_ct_number"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="CT Number"
+            android:background="@drawable/rounded_input"
+            android:padding="8dp"
+            android:inputType="number"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/input_ct_date"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Select Date"
+            android:background="@drawable/rounded_input"
+            android:padding="8dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"
+            android:focusable="true" />
+
+
+        <!-- Course -->
+        <EditText
+            android:id="@+id/input_course"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Course"
+            android:background="@drawable/rounded_input"
+            android:padding="8dp"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp" />
+
+        <!-- Teacher Name -->
+        <EditText
+            android:id="@+id/input_teacher_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Teacher Name"
+            android:background="@drawable/rounded_input"
+            android:padding="8dp"
+            android:inputType="textPersonName"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp" />
+
+        <!-- Syllabus -->
+        <EditText
+            android:id="@+id/input_syllabus"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Syllabus"
+            android:background="@drawable/rounded_input"
+            android:padding="8dp"
+            android:inputType="text"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp" />
+
+        <!-- Status -->
+        <Spinner
+            android:id="@+id/input_status"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_input"
+            android:padding="8dp" />
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/btn_submit_ct"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="Add CT"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp" />
+    </LinearLayout>
+</ScrollView>

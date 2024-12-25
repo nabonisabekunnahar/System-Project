@@ -15,18 +15,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.adminapp.R;
-import com.example.adminapp.UploadNotice;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,120 +37,161 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AddTeachers extends AppCompatActivity {
 
     private ImageView addTeacherImage;
-    private EditText addTeacherName,addTeacherEmail,addTeacherPhone,addTeacherCourse;
-    private Spinner addTeacherCategory;
+    private EditText addTeacherName, addTeacherEmail, addTeacherPhone, addTeacherCourse;
     private Button addTeacherBtn;
     private final int REQ = 1;
     private Bitmap bitmap = null;
-    private String name,email,phone,course,downloadUrl = "";
+    private String name, email, phone, course, downloadUrl = "";
     private ProgressDialog pd;
     private StorageReference storageReference;
-    private DatabaseReference reference,dbRef;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_teachers);
 
-        addTeacherImage=findViewById(R.id.addTeacherImage);
-        addTeacherName=findViewById(R.id.addTeacherName);
-        addTeacherEmail=findViewById(R.id.addTeacherEmail);
-        addTeacherPhone=findViewById(R.id.addTeacherPhone);
-        addTeacherCourse=findViewById(R.id.addTeacherCourse);
-        //addTeacherCategory=findViewById(R.id.addTeacherCategory);
-        addTeacherBtn=findViewById(R.id.addTeacherBtn);
+        addTeacherImage = findViewById(R.id.addTeacherImage);
+        addTeacherName = findViewById(R.id.addTeacherName);
+        addTeacherEmail = findViewById(R.id.addTeacherEmail);
+        addTeacherPhone = findViewById(R.id.addTeacherPhone);
+        addTeacherCourse = findViewById(R.id.addTeacherCourse);
+        addTeacherBtn = findViewById(R.id.addTeacherBtn);
 
-        pd=new ProgressDialog(this);
+        pd = new ProgressDialog(this);
 
         reference = FirebaseDatabase.getInstance().getReference().child("teacher");
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        addTeacherImage.setOnClickListener((View.OnClickListener) (view) -> {
-            openGalarey();
-        });
-
-        addTeacherBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkValidation();
-            }
-        });
-
+        addTeacherImage.setOnClickListener(view -> openGallery());
+        addTeacherBtn.setOnClickListener(v -> validateAndUpload());
     }
 
-    private void checkValidation() {
-
-        name = addTeacherName.getText().toString();
-        email = addTeacherEmail.getText().toString();
-        phone = addTeacherPhone.getText().toString();
-        course = addTeacherCourse.getText().toString();
+    private void validateAndUpload() {
+        name = addTeacherName.getText().toString().trim();
+        email = addTeacherEmail.getText().toString().trim();
+        phone = addTeacherPhone.getText().toString().trim();
+        course = addTeacherCourse.getText().toString().trim();
 
         if (name.isEmpty()) {
             addTeacherName.setError("Empty");
             addTeacherName.requestFocus();
-        } else if (email.isEmpty()) {
+            return;
+        }
+        if (email.isEmpty()) {
             addTeacherEmail.setError("Empty");
             addTeacherEmail.requestFocus();
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return;
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             addTeacherEmail.setError("Invalid Email");
             addTeacherEmail.requestFocus();
-        } else if (phone.isEmpty()) {
+            return;
+        }
+        if (phone.isEmpty()) {
             addTeacherPhone.setError("Empty");
             addTeacherPhone.requestFocus();
-        } else if (!phone.matches("\\d{11}")) { // Example: Checking for a 10-digit phone number
+            return;
+        }
+        if (!phone.matches("\\d{11}")) { // Example: Checking for an 11-digit phone number
             addTeacherPhone.setError("Invalid Phone Number");
             addTeacherPhone.requestFocus();
-        } else if (course.isEmpty()) {
+            return;
+        }
+        if (course.isEmpty()) {
             addTeacherCourse.setError("Empty");
             addTeacherCourse.requestFocus();
-        } else {
-            uploadImage();
+            return;
         }
+
+        uploadImage();
     }
 
-    private void insertData() {
+    private void uploadImage() {
+        if (bitmap == null) {
+            insertData(""); // Skip image upload if no image is selected
+            return;
+        }
+
+        pd.setMessage("Uploading image...");
+        pd.show();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] finalImg = baos.toByteArray();
+
+        final String fileName = "TeacherImages/" + System.currentTimeMillis() + ".jpg";
+        final StorageReference filePath = storageReference.child(fileName);
+
+        Log.d("UploadImage", "Uploading image to: " + filePath.getPath());
+
+        filePath.putBytes(finalImg)
+                .addOnSuccessListener(taskSnapshot -> filePath.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            downloadUrl = uri.toString();
+                            Log.d("UploadImage", "Image uploaded successfully, URL: " + downloadUrl);
+                            insertData(downloadUrl);
+                        })
+                        .addOnFailureListener(e -> {
+                            pd.dismiss();
+                            Log.e("UploadImage", "Failed to get download URL: " + e.getMessage());
+                            Toast.makeText(AddTeachers.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                        }))
+                .addOnFailureListener(e -> {
+                    pd.dismiss();
+                    Log.e("UploadImage", "Upload failed: " + e.getMessage());
+                    Toast.makeText(AddTeachers.this, "Image upload failed", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void insertData(String imageUrl) {
         pd.setMessage("Uploading data...");
         pd.show();
 
-        // Get the authenticated admin's data from Firestore
+        // Retrieve the authenticated admin's data from Firestore
         FirebaseFirestore.getInstance().collection("Admin")
                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
+                        // Retrieve admin's faculty, department, and year
                         String faculty = documentSnapshot.getString("faculty");
                         String department = documentSnapshot.getString("department");
-                        String batch = documentSnapshot.getString("year"); // Assuming "year" represents batch info
+                        String batch = documentSnapshot.getString("year");
+                        String adminUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                         if (faculty == null || department == null || batch == null) {
                             pd.dismiss();
-                            Toast.makeText(this, "Failed to fetch admin's faculty, department, or batch", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Admin details are incomplete", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
-                        // Generate a unique key for the teacher
-                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference()
+                        // Generate unique key for the teacher
+                        DatabaseReference teacherRef = FirebaseDatabase.getInstance().getReference()
                                 .child("teacher")
                                 .child(faculty)
                                 .child(department)
                                 .child(batch);
-                        String key = dbRef.push().getKey();
+                        String teacherKey = teacherRef.push().getKey();
+
+                        if (teacherKey == null) {
+                            pd.dismiss();
+                            Toast.makeText(this, "Failed to generate teacher key", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         // Create a TeacherData object
-                        TeacherData teacherData = new TeacherData(name, email, phone, course, downloadUrl, key);
+                        TeacherData teacherData = new TeacherData(
+                                name, email, phone, course, imageUrl, teacherKey, faculty, department, batch, adminUid
+                        );
 
-                        // Push the TeacherData object to the database
-                        dbRef.child(key).setValue(teacherData)
+                        // Save teacher data under the teacher path
+                        teacherRef.child(teacherKey).setValue(teacherData)
                                 .addOnSuccessListener(aVoid -> {
                                     pd.dismiss();
                                     Toast.makeText(AddTeachers.this, "Teacher added successfully", Toast.LENGTH_SHORT).show();
-                                    // Clear fields or reset UI if necessary
-                                    addTeacherName.setText("");
-                                    addTeacherEmail.setText("");
-                                    addTeacherPhone.setText("");
-                                    addTeacherCourse.setText("");
-                                    //addTeacherImage.setImageResource(R.drawable.placeholder_image); // Reset to default image
-                                    bitmap = null;
+                                    // Reset input fields
+                                    resetFields();
                                 })
                                 .addOnFailureListener(e -> {
                                     pd.dismiss();
@@ -172,59 +210,7 @@ public class AddTeachers extends AppCompatActivity {
                 });
     }
 
-
-    private void uploadImage() {
-        if (bitmap == null) {
-            insertData(); // Skip image upload if no image is selected
-            return;
-        }
-
-        pd.setMessage("Uploading...");
-        pd.show();
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        byte[] finalImg = baos.toByteArray();
-
-        final String fileName = System.currentTimeMillis() + ".jpg";
-        final StorageReference filePath = storageReference.child(fileName);
-
-        Log.d("UploadImage", "Uploading image to: " + filePath.getPath());
-
-        UploadTask uploadTask = filePath.putBytes(finalImg);
-        uploadTask.addOnCompleteListener(AddTeachers.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()) {
-                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            downloadUrl = uri.toString();
-                            Log.d("UploadImage", "Image uploaded successfully, URL: " + downloadUrl);
-                            insertData(); // Proceed with data upload after image upload
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            pd.dismiss();
-                            Log.e("UploadImage", "Failed to get download URL: " + e.getMessage());
-                            Toast.makeText(AddTeachers.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    pd.dismiss();
-                    Log.e("UploadImage", "Upload failed: " + task.getException().getMessage());
-                    Toast.makeText(AddTeachers.this, "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    private void insertImage(){
-        
-    }
-
-    private void openGalarey(){
+    private void openGallery() {
         Intent pickImage = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickImage, REQ);
     }
@@ -232,14 +218,25 @@ public class AddTeachers extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQ && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                addTeacherImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
+                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
             }
-            addTeacherImage.setImageBitmap(bitmap);
         }
+    }
+
+    private void resetFields() {
+        addTeacherName.setText("");
+        addTeacherEmail.setText("");
+        addTeacherPhone.setText("");
+        addTeacherCourse.setText("");
+        addTeacherImage.setImageResource(R.drawable.circle_img); // Replace with your default image
+        bitmap = null;
     }
 }
