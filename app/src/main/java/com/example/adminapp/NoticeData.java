@@ -1,19 +1,29 @@
 package com.example.adminapp;
 
 public class NoticeData {
-    String title,image,date,time,key,visibility,body;
+    public String key, title, body, image, date, time, visibility, adminUid;
 
     public NoticeData() {
     }
 
-    public NoticeData(String title, String image, String date, String time, String key,String visibility,String body) {
+    public NoticeData(String key, String title, String body, String image, String date, String time,
+                      String visibility,String adminUid) {
+        this.key = key;
         this.title = title;
+        this.body = body;
         this.image = image;
         this.date = date;
         this.time = time;
-        this.key = key;
         this.visibility = visibility;
-        this.body = body;
+        this.adminUid = adminUid;
+    }
+
+    public String getAdminUid() {
+        return adminUid;
+    }
+
+    public void setAdminUid(String adminUid) {
+        this.adminUid = adminUid;
     }
 
     public String getTitle() {

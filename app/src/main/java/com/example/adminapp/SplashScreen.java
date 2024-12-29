@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.adminapp.UserInterface.UserSignUp;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -32,7 +33,10 @@ public class SplashScreen extends AppCompatActivity {
 
         // Student Button Click Listener
         studentButton.setOnClickListener(view -> {
-
+            // Navigate to Admin/CR Activity
+            Intent intent = new Intent(SplashScreen.this, UserSignUp.class);
+            startActivity(intent);
+            finish(); // Close splash screen
         });
 
     }

@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/rounded_background"
+    android:elevation="4dp"
+    android:layout_margin="6dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- User Info -->
+<RelativeLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:paddingBottom="4dp">
+
+
+<de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/commentUserProfileImageView"
+    android:layout_width="40dp"
+android:layout_height="40dp"
+android:src="@drawable/ic_user_placeholder"
+android:scaleType="centerCrop"
+android:layout_alignParentStart="true"
+android:layout_centerVertical="true"
+android:elevation="2dp" />
+
+<!-- Username -->
+<TextView
+    android:id="@+id/commentUserNameTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toEndOf="@id/commentUserProfileImageView"
+    android:layout_marginStart="8dp"
+android:layout_marginTop="4dp"
+android:text="User Name"
+android:textStyle="bold"
+android:textSize="14sp"
+android:textColor="@android:color/black" />
+
+<!-- Time Text -->
+<TextView
+    android:id="@+id/commentTimeTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_marginEnd="4dp"
+    android:layout_centerVertical="true"
+    android:text="2 hrs ago"
+    android:textSize="10sp"
+android:textColor="@android:color/darker_gray" />
+</RelativeLayout>
+
+    <!-- Comment Content -->
+<TextView
+android:id="@+id/commentContentTextView"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="4dp"
+    android:padding="8dp"
+    android:background="@drawable/rounded_comment_background"
+    android:text="This is a comment."
+    android:textSize="12sp"
+    android:textColor="@android:color/black" />
+
+    <!-- Like and Reply Buttons -->
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginTop="6dp">
+
+<!-- Like Button -->
+<TextView
+    android:id="@+id/likeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Like"
+    android:textStyle="bold"
+    android:textSize="12sp"
+android:textColor="@android:color/holo_blue_light"
+android:layout_marginEnd="12dp"
+android:fontFamily="sans-serif-medium" />
+
+<!-- Reply Button -->
+<TextView
+    android:id="@+id/replyButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Reply"
+    android:textStyle="bold"
+    android:textSize="12sp"
+android:textColor="@android:color/holo_blue_light"
+android:fontFamily="sans-serif-medium" />
+</LinearLayout>
+    </LinearLayout>
