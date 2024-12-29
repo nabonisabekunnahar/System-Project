@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Dashboard -->
+    <item
+        android:id="@+id/nav_dashboard"
+
+        android:title="Dashboard" />
+
+    <!-- Campus Feed -->
+    <item
+        android:id="@+id/nav_feed"
+
+        android:title="Campus Feed" />
+
+    <!-- Bus Schedule -->
+    <item
+        android:id="@+id/nav_bus_schedule"
+
+        android:title="Bus Schedule" />
+
+    <!-- CT Info -->
+    <item
+        android:id="@+id/nav_ct_info"
+
+        android:title="CT Info" />
+
+    <!-- Profile -->
+    <item
+        android:id="@+id/nav_profile"
+
+        android:title="Profile" />
+
+    <!-- Logout -->
+    <item
+        android:id="@+id/nav_logout"
+
+        android:title="Logout" />
+</menu>

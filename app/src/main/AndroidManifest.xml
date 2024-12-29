@@ -20,20 +20,24 @@
         android:theme="@style/Theme.AdminApp"
         tools:targetApi="31">
         <activity
+            android:name=".UserInterface.CreatePost.CreatePostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserInterface.UserMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserInterface.UserLogin"
+            android:exported="false" />
+        <activity
+            android:name=".UserInterface.UserSignUp"
+            android:exported="false" />
+        <activity
             android:name=".CtTracking.CTInfoChange"
             android:exported="false" />
         <activity
             android:name=".eBook.UploadDriveActivity"
             android:exported="false" />
-        <activity
-            android:name=".eBook.ParentFolderCreate"
-            android:exported="false" />
-        <activity
-            android:name=".eBook.UploadFile"
-            android:exported="false" />
-        <activity
-            android:name=".eBook.UploadSubPdf"
-            android:exported="false" />
+
         <activity
             android:name=".CtTracking.AddCTInfo"
             android:exported="false" />
@@ -74,5 +78,9 @@
             android:name=".MainActivity"
             android:exported="false" />
     </application>
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
 
 </manifest>

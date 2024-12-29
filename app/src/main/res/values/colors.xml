@@ -15,4 +15,19 @@
     <color name="lightGray">#c1c1c1</color>
     <color name="toolbar">#43726D</color>
 
+    <!-- Secondary Colors -->
+    <color name="secondaryColor">#03DAC5</color>
+    <color name="secondaryLightColor">#66FFF9</color>
+    <color name="secondaryDarkColor">#00A896</color>
+    <color name="textColorSecondary">#757575</color>
+
+    <color name="primaryColor">#4CAF50</color>
+    <color name="backgroundColor">#F5F5F5</color>
+    <color name="cardStroke">#E0E0E0</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="accentColor">#FF5722</color>
+    <color name="buttonText">#FFFFFF</color>
+    <color name="cardBackground">#FFFFFF</color>
+
 </resources>
